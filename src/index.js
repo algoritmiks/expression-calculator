@@ -3,7 +3,7 @@ function eval() {
     return;
 }
 
-const getLastItemOfArray = (arr) => {
+const getTopItem = (arr) => {
     return arr[arr.length-1];
 }
 
@@ -25,8 +25,7 @@ const expressionCalculator = (expr) => {
         throw new Error("TypeError: Division by zero.");
     }
     const priority = { '+': 1, '-': 1, '*': 2, '/': 2, '(': 0, ')': 0 };
-    let numStack = [];
-    let operationStack = [];
+    let numStack = [], operationStack = [];
     let exprArray = expr.trim().split(/\s+/g);
     if (!expr.includes(" ")) { exprArray = expr.split('') };
     for (let i=0; i < exprArray.length; i++) {
@@ -34,17 +33,17 @@ const expressionCalculator = (expr) => {
             numStack.push(Number(exprArray[i]));
             continue;
         }
-        if ( operationStack.length == 0 || exprArray[i] == '(') {   
-            operationStack.push(exprArray[i]);
-            continue;
-        }
-        if ( priority[getLastItemOfArray(operationStack)] < priority[exprArray[i]] ) {  
-            operationStack.push(exprArray[i]);
-            continue;
-        }
         let currentOperation = exprArray[i];
+        if ( operationStack.length == 0 || currentOperation == '(') {   
+            operationStack.push(currentOperation);
+            continue;
+        }
+        if ( priority[getTopItem(operationStack)] < priority[currentOperation] ) {  
+            operationStack.push(currentOperation);
+            continue;
+        }
         while ( true ) {
-            let topOperationStack = getLastItemOfArray(operationStack);
+            let topOperationStack = getTopItem(operationStack);
             if ( currentOperation == ')' && topOperationStack == '(' ) {
                 operationStack.pop();
                 break;
@@ -63,7 +62,6 @@ const expressionCalculator = (expr) => {
             }
         }
     }
-    
     for (let i=0; i<=operationStack.length; i++) {
         let b = numStack.pop();
         let a = numStack.pop();
