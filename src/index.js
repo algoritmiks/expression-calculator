@@ -9,16 +9,11 @@ const getLastItemOfArray = (arr) => {
 
 const calculate = (operation, a, b) => {
     switch (operation) {
-        case '+': 
-            return a + b;
-        case '-':
-            return a - b;
-        case '*':
-            return a * b;
-        case '/':
-            return a / b;
-        default:
-            return;
+        case '+': return a + b;
+        case '-': return a - b;
+        case '*': return a * b;
+        case '/': return a / b;
+        default: return;
     }
 };
 
@@ -48,7 +43,7 @@ const expressionCalculator = (expr) => {
             continue;
         }
         let currentOperation = exprArray[i];
-        while (true) {
+        while ( true ) {
             let topOperationStack = getLastItemOfArray(operationStack);
             if ( currentOperation == ')' && topOperationStack == '(' ) {
                 operationStack.pop();
