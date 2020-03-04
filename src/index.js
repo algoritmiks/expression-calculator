@@ -33,7 +33,7 @@ const expressionCalculator = (expr) => {
     let numStack = [];
     let operationStack = [];
     let exprArray = expr.trim().split(/\s+/g);
-    if (!expr.includes(" ")) { exprArray = expr };
+    if (!expr.includes(" ")) { exprArray = expr.split('') };
     for (let i=0; i < exprArray.length; i++) {
         if ( !isNaN( Number(exprArray[i]) ) ) {     
             numStack.push(Number(exprArray[i]));
